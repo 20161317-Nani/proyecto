@@ -3,21 +3,26 @@ export async function getOverviewData() {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
   return {
-    views: {
-      value: 3456,
-      growthRate: 0.43,
+    productosActivos: {
+      value: 12,
+      label: "PRODUCTOS ACTIVOS",
     },
-    profit: {
-      value: 4220,
-      growthRate: 4.35,
+    agotados: {
+      value: "02",
+      label: "AGOTADOS",
     },
-    products: {
-      value: 3456,
-      growthRate: 2.59,
+    ventasMes: {
+      value: "$14.2k",
+      label: "VENTAS DEL MES",
     },
-    users: {
-      value: 3456,
-      growthRate: -0.95,
+    pedidosPendientes: {
+      value: "08",
+      label: "PEDIDOS PENDIENTES",
+    },
+    certificacion: {
+      value: "APROBADO",
+      label: "CERTIFICACIÓN",
+      status: "success" // Para el badge verde
     },
   };
 }
