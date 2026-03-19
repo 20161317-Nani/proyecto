@@ -19,6 +19,7 @@ type PropsType = {
 export default async function Home({ searchParams }: PropsType) {
   const { selected_time_frame } = await searchParams;
   const extractTimeFrame = createTimeFrameExtractor(selected_time_frame);
+  const showExtras = false; // Set to true to show RegionLabels / UsedDevices again
 
   return (
     <>
@@ -39,13 +40,17 @@ export default async function Home({ searchParams }: PropsType) {
           className="col-span-12 xl:col-span-5"
         />
 
-        <UsedDevices
-          className="col-span-12 xl:col-span-5"
-          key={extractTimeFrame("used_devices")}
-          timeFrame={extractTimeFrame("used_devices")?.split(":")[1]}
-        />
+        {showExtras && (
+          <>
+            <UsedDevices
+              className="col-span-12 xl:col-span-5"
+              key={extractTimeFrame("used_devices")}
+              timeFrame={extractTimeFrame("used_devices")?.split(":")[1]}
+            />
 
-        <RegionLabels />
+            <RegionLabels />
+          </>
+        )}
 
         <div className="col-span-12 grid xl:col-span-8">
           <Suspense fallback={<TopChannelsSkeleton />}>
