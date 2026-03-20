@@ -16,7 +16,6 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile Overlay */}
       {isMobile && isOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/50 transition-opacity duration-300"
@@ -27,13 +26,10 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          "max-w-[290px] overflow-hidden border-r border-green-100 bg-green-50 transition-[width] duration-200 ease-linear dark:border-gray-800 dark:bg-gray-dark",
+          "max-w-[290px] overflow-hidden border-r border-green-200 bg-green-100 transition-[width] duration-200 ease-linear",
           isMobile ? "fixed bottom-0 top-0 z-50" : "sticky top-0 h-screen",
           isOpen ? "w-full" : "w-0",
         )}
-        aria-label="Main navigation"
-        aria-hidden={!isOpen}
-        inert={!isOpen}
       >
         <div className="flex h-full flex-col py-10 pl-[25px] pr-[7px]">
           
@@ -50,49 +46,42 @@ export function Sidebar() {
             {isMobile && (
               <button
                 onClick={toggleSidebar}
-                className="absolute left-3/4 right-4.5 top-1/2 -translate-y-1/2 text-right"
+                className="absolute left-3/4 right-4.5 top-1/2 -translate-y-1/2"
               >
-                <span className="sr-only">Close Menu</span>
                 <ArrowLeftIcon className="ml-auto size-7" />
               </button>
             )}
           </div>
 
           {/* Navigation */}
-          <div className="custom-scrollbar mt-6 flex-1 overflow-y-auto pr-3 min-[850px]:mt-10">
+          <div className="mt-6 flex-1 overflow-y-auto pr-3 min-[850px]:mt-10">
             {NAV_DATA.map((section) => (
               <div key={section.label} className="mb-6">
                 
-                <h2 className="mb-5 text-sm font-medium text-green-800">
+                <h2 className="mb-5 text-sm font-medium text-green-900">
                   {section.label}
                 </h2>
 
-                <nav role="navigation" aria-label={section.label}>
-                  <ul className="space-y-2">
-                    {section.items.map((item) => (
-                      <li key={item.title}>
-                        <MenuItem
-                          className={cn(
-                            "flex items-center gap-3 py-3 px-3 rounded-lg transition",
-                            "hover:bg-green-100",
-                            pathname === item.url &&
-                              "bg-green-200 text-green-900 font-medium"
-                          )}
-                          as="link"
-                          href={item.url}
-                          isActive={pathname === item.url}
-                        >
-                          <item.icon
-                            className="size-6 shrink-0"
-                            aria-hidden="true"
-                          />
-
-                          <span>{item.title}</span>
-                        </MenuItem>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+                <ul className="space-y-2">
+                  {section.items.map((item) => (
+                    <li key={item.title}>
+                      <MenuItem
+                        className={cn(
+                          "flex items-center gap-3 py-3 px-3 rounded-lg transition",
+                          "hover:bg-green-200",
+                          pathname === item.url &&
+                            "bg-green-300 text-green-900 font-medium"
+                        )}
+                        as="link"
+                        href={item.url}
+                        isActive={pathname === item.url}
+                      >
+                        <item.icon className="size-6 shrink-0" />
+                        <span>{item.title}</span>
+                      </MenuItem>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
