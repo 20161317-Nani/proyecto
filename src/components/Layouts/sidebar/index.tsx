@@ -27,7 +27,7 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          "max-w-[290px] overflow-hidden border-r border-gray-200 bg-white transition-[width] duration-200 ease-linear dark:border-gray-800 dark:bg-gray-dark",
+          "max-w-[290px] overflow-hidden border-r border-green-100 bg-green-50 transition-[width] duration-200 ease-linear dark:border-gray-800 dark:bg-gray-dark",
           isMobile ? "fixed bottom-0 top-0 z-50" : "sticky top-0 h-screen",
           isOpen ? "w-full" : "w-0",
         )}
@@ -36,6 +36,7 @@ export function Sidebar() {
         inert={!isOpen}
       >
         <div className="flex h-full flex-col py-10 pl-[25px] pr-[7px]">
+          
           {/* Logo */}
           <div className="relative pr-4.5">
             <Link
@@ -61,7 +62,8 @@ export function Sidebar() {
           <div className="custom-scrollbar mt-6 flex-1 overflow-y-auto pr-3 min-[850px]:mt-10">
             {NAV_DATA.map((section) => (
               <div key={section.label} className="mb-6">
-                <h2 className="mb-5 text-sm font-medium text-dark-4 dark:text-dark-6">
+                
+                <h2 className="mb-5 text-sm font-medium text-green-800">
                   {section.label}
                 </h2>
 
@@ -70,7 +72,12 @@ export function Sidebar() {
                     {section.items.map((item) => (
                       <li key={item.title}>
                         <MenuItem
-                          className="flex items-center gap-3 py-3"
+                          className={cn(
+                            "flex items-center gap-3 py-3 px-3 rounded-lg transition",
+                            "hover:bg-green-100",
+                            pathname === item.url &&
+                              "bg-green-200 text-green-900 font-medium"
+                          )}
                           as="link"
                           href={item.url}
                           isActive={pathname === item.url}
