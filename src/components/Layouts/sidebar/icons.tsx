@@ -168,6 +168,40 @@ export function Authentication(props: PropsType) {
   );
 }
 
+export function Certificate(props: PropsType) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      {...props}
+    >
+      <path d="M12 2a1 1 0 011 1v2h8a1 1 0 011 1v12a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1h8V3a1 1 0 011-1zm0 6a3 3 0 100 6 3 3 0 000-6z" />
+    </svg>
+  );
+}
+
+export function Settings(props: PropsType) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 2a1 1 0 01.993.883l.291 2.326a7.974 7.974 0 011.957 1.134l1.8-1.354a1 1 0 011.328.159l1.414 1.414a1 1 0 01.158 1.328l-1.354 1.8a7.976 7.976 0 011.134 1.957l2.326.291A1 1 0 0122 15a1 1 0 01-.883.993l-2.326.291a7.976 7.976 0 01-1.134 1.957l1.354 1.8a1 1 0 01-.158 1.328l-1.414 1.414a1 1 0 01-1.328-.158l-1.8-1.354a7.974 7.974 0 01-1.957 1.134l-.291 2.326A1 1 0 0112 22a1 1 0 01-.993-.883l-.291-2.326a7.974 7.974 0 01-1.957-1.134l-1.8 1.354a1 1 0 01-1.328-.159l-1.414-1.414a1 1 0 01-.158-1.328l1.354-1.8a7.976 7.976 0 01-1.134-1.957L2.883 13.993A1 1 0 012 13a1 1 0 01.883-.993l2.326-.291a7.976 7.976 0 011.134-1.957l-1.354-1.8a1 1 0 01.158-1.328l1.414-1.414a1 1 0 011.328.158l1.8 1.354a7.974 7.974 0 011.957-1.134l.291-2.326A1 1 0 0112 2zm0 7a2 2 0 100 4 2 2 0 000-4z"
+      />
+    </svg>
+  );
+}
+
 export function ArrowLeftIcon(props: PropsType) {
   return (
     <svg

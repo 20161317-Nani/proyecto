@@ -14,6 +14,8 @@ export const NAV_DATA = [
       { title: "Usuarios", url: "/usuarios", icon: Icons.User },
       { title: "Tienda", url: "/tienda", icon: Icons.HomeIcon },
       { title: "Reportes", url: "/reportes", icon: Icons.PieChart },
+      { title: "Certificaciones", url: "/certificaciones", icon: Icons.Certificate },
+      { title: "Configuración", url: "/configuracion", icon: Icons.Settings },
     ],
   },
 ];
