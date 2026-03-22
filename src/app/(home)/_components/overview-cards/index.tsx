@@ -12,44 +12,41 @@ export async function OverviewCardsGroup() {
     ...obj,
   });
 
-  const views = safe(data?.views);
-  const profit = safe(data?.profit);
-  const products = safe(data?.products);
-  const users = safe(data?.users);
+  const productosActivos = safe(data?.productosActivos);
+  const agotados = safe(data?.agotados);
+  const ventasMes = safe(data?.ventasMes);
+  const pedidosPendientes = safe(data?.pedidosPendientes);
   return (
     <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4 2xl:gap-7.5">
       <OverviewCard
-        label="Total Views"
+        label={productosActivos.label}
         data={{
-          ...views,
-          value: compactFormat(views.value),
+          ...productosActivos,
+          value: compactFormat(productosActivos.value),
         }}
         Icon={icons.Views}
       />
 
       <OverviewCard
-        label="Total Profit"
+        label={agotados.label}
         data={{
-          ...profit,
-          value: "$" + compactFormat(profit.value),
+          ...agotados,
         }}
         Icon={icons.Profit}
       />
 
       <OverviewCard
-        label="Total Products"
+        label={ventasMes.label}
         data={{
-          ...products,
-          value: compactFormat(products.value),
+          ...ventasMes,
         }}
         Icon={icons.Product}
       />
 
       <OverviewCard
-        label="Total Users"
+        label={pedidosPendientes.label}
         data={{
-          ...users,
-          value: compactFormat(users.value),
+          ...pedidosPendientes,
         }}
         Icon={icons.Users}
       />
