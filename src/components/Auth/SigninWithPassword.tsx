@@ -34,7 +34,7 @@ export default function SigninWithPassword() {
 
     try {
       const response = await api.auth.login(data.email, data.password);
-      const token = (response as any)?.token;
+      const token = (response as any)?.access_token;
       if (token) {
         localStorage.setItem("token", token);
         router.push("/tienda");

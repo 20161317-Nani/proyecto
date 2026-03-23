@@ -19,11 +19,14 @@ const fetchApi = async <T>(url: string, options?: RequestInit): Promise<T> => {
 export const api = {
   auth: {
     login: (email: string, password: string) =>
-      fetchApi(`${API_BASE}/auth/login`, {
-        method: "POST",
-        headers: headers(),
-        body: JSON.stringify({ email, password }),
-      }),
+      fetchApi<{ access_token: string; usuario: any }>(
+        `${API_BASE}/auth/login`,
+        {
+          method: "POST",
+          headers: headers(),
+          body: JSON.stringify({ email, password }),
+        },
+      ),
     register: (data: { email: string; password: string; nombre: string }) =>
       fetchApi(`${API_BASE}/auth/register`, {
         method: "POST",
