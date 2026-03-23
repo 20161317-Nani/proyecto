@@ -1,44 +1,64 @@
 "use client";
+
 import { EmailIcon, PasswordIcon } from "@/assets/icons";
 import Link from "next/link";
 import React, { useState } from "react";
 import InputGroup from "../FormElements/InputGroup";
 import { Checkbox } from "../FormElements/checkbox";
+import { api } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 export default function SigninWithPassword() {
+  const router = useRouter();
   const [data, setData] = useState({
-    email: process.env.NEXT_PUBLIC_DEMO_USER_MAIL || "",
-    password: process.env.NEXT_PUBLIC_DEMO_USER_PASS || "",
+    email: "",
+    password: "",
     remember: false,
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,
     });
+    setError(null);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // You can remove this code block
     setLoading(true);
+    setError(null);
 
-    setTimeout(() => {
+    try {
+      const response = await api.auth.login(data.email, data.password);
+      const token = (response as any)?.token;
+      if (token) {
+        localStorage.setItem("token", token);
+        router.push("/tienda");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al iniciar sesión");
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {error && (
+        <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-500">
+          {error}
+        </div>
+      )}
+
       <InputGroup
         type="email"
-        label="Email"
+        label="Correo electrónico"
         className="mb-4 [&_input]:py-[15px]"
-        placeholder="Enter your email"
+        placeholder="Ingresa tu correo"
         name="email"
         handleChange={handleChange}
         value={data.email}
@@ -47,9 +67,9 @@ export default function SigninWithPassword() {
 
       <InputGroup
         type="password"
-        label="Password"
+        label="Contraseña"
         className="mb-5 [&_input]:py-[15px]"
-        placeholder="Enter your password"
+        placeholder="Ingresa tu contraseña"
         name="password"
         handleChange={handleChange}
         value={data.password}
@@ -58,7 +78,7 @@ export default function SigninWithPassword() {
 
       <div className="mb-6 flex items-center justify-between gap-2 py-2 font-medium">
         <Checkbox
-          label="Remember me"
+          label="Recordarme"
           name="remember"
           withIcon="check"
           minimal
@@ -70,23 +90,17 @@ export default function SigninWithPassword() {
             })
           }
         />
-
-        <Link
-          href="/auth/forgot-password"
-          className="hover:text-primary dark:text-white dark:hover:text-primary"
-        >
-          Forgot Password?
-        </Link>
       </div>
 
       <div className="mb-4.5">
         <button
           type="submit"
-          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary p-4 font-medium text-white transition hover:bg-opacity-90"
+          disabled={loading}
+          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 p-4 font-medium text-white transition hover:bg-green-700 disabled:opacity-50"
         >
-          Sign In
+          {loading ? "Ingresando..." : "Ingresar"}
           {loading && (
-            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-white border-t-transparent dark:border-primary dark:border-t-transparent" />
+            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-white border-t-transparent" />
           )}
         </button>
       </div>

@@ -1,23 +1,44 @@
-import Signin from "@/components/Auth/Signin";
+import Link from "next/link";
+import Image from "next/image";
+import { SignUpForm } from "./_components/sign-up-form";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Sign in",
+  title: "Crear cuenta",
 };
 
-export default function SignIn() {
+export default function SignUpPage() {
   return (
     <>
-      <Breadcrumb pageName="Sign In" />
+      <Breadcrumb pageName="Crear Cuenta" />
 
       <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
         <div className="flex flex-wrap items-center">
           <div className="w-full xl:w-1/2">
             <div className="w-full p-4 sm:p-12.5 xl:p-15">
-              <Signin />
+              <div className="mb-6 text-center">
+                <h1 className="mb-4 text-2xl font-bold text-dark dark:text-white">
+                  Crear Cuenta
+                </h1>
+                <p className="text-gray-500">
+                  Regístrate para comenzar a comprar
+                </p>
+              </div>
+
+              <SignUpForm />
+
+              <div className="mt-6 text-center">
+                <p>
+                  ¿Ya tienes una cuenta?{" "}
+                  <Link
+                    href="/auth/sign-in"
+                    className="text-green-600 hover:underline"
+                  >
+                    Ingresar
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
 
@@ -40,16 +61,15 @@ export default function SignIn() {
                 />
               </Link>
               <p className="mb-3 text-xl font-medium text-dark dark:text-white">
-                Sign in to your account
+                Únete a nuestra tienda
               </p>
 
               <h1 className="mb-4 text-2xl font-bold text-dark dark:text-white sm:text-heading-3">
-                Welcome Back!
+                ¡Bienvenido!
               </h1>
 
               <p className="w-full max-w-[375px] font-medium text-dark-4 dark:text-dark-6">
-                Please sign in to your account by completing the necessary
-                fields below
+                Crea una cuenta para acceder a todos nuestros productos frescos
               </p>
 
               <div className="mt-31">
