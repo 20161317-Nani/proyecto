@@ -34,10 +34,28 @@ export default function SigninWithPassword() {
 
     try {
       const response = await api.auth.login(data.email, data.password);
-      const token = (response as any)?.access_token;
-      if (token) {
-        localStorage.setItem("token", token);
-        router.push("/tienda");
+      const result = response as any;
+      const access_token = result.access_token;
+      const usuario = result.usuario || {};
+
+      if (access_token) {
+        localStorage.setItem("token", access_token);
+
+        const userRoles = usuario.roles || [];
+        localStorage.setItem(
+          "usuario",
+          JSON.stringify({
+            sub: usuario.sub || "",
+            email: usuario.email || data.email,
+            nombre: usuario.nombre || "",
+            roles: userRoles,
+          }),
+        );
+
+        const isAdminOrProductor =
+          userRoles.includes("admin") || userRoles.includes("productor");
+
+        router.push(isAdminOrProductor ? "/dashboard" : "/producto");
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al iniciar sesión");

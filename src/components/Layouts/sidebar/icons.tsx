@@ -240,3 +240,67 @@ export function ArrowLeftIcon(props: PropsType) {
     </svg>
   );
 }
+
+export function ShieldIcon(props: PropsType) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l5 2.5V7l-5 2.5v2.5l5-2.5V12l-5 2.5V10l5-2.5V5z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+export function KeyIcon(props: PropsType) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7 14c-2.21 0-4-1.79-4-4S4.79 6 7 6s4 1.79 4 4c0 .74-.2 1.44-.56 2.03l5.56 5.56a2 2 0 002.83-2.83l-5.56-5.56c-.59-.36-1.29-.56-2.03-.56zm0-6a2 2 0 100 4 2 2 0 000-4z"
+        fill="currentColor"
+      />
+      <path
+        d="M19.07 4.93l-1.41 1.41A9 9 0 1012 21a9 9 0 001.41-1.41l1.41 1.41a11 11 0 000-15.52z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+export function UsersIcon(props: PropsType) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M9 2a4 4 0 00-4 4v1.05c-.59-.19-1.21-.3-1.85-.3C1.96 6.75.5 8.21.5 10c0 .96.41 1.82 1.05 2.45A4.97 4.97 0 003 15.5c0 .73.16 1.42.44 2.05.53 1.17 1.52 2.01 2.81 2.2 1.28.19 2.75.05 4.75.05s3.47.14 4.75-.05c1.29-.19 2.28-1.03 2.81-2.2.28-.63.44-1.32.44-2.05a4.97 4.97 0 001.45-2.55c.64-.63 1.05-1.49 1.05-2.45 0-1.79-1.46-3.25-3.65-3.25-.64 0-1.26.11-1.85.3V6c0-2.21-1.79-4-4-4zm0 6a2 2 0 110-4 2 2 0 010 4zm8 8c0-2.21-1.79-4-4-4h-.08c1.06 1.06 1.58 2.43 1.58 4H17zm2-8c0 2.21 1.79 4 4 4 .73 0 1.42-.16 2.05-.44 1.17-.53 2.01-1.52 2.2-2.81.19-1.28.05-2.75.05-4.75s-.14-3.47.05-4.75c.19-1.29-1.03-2.28-2.2-2.81-.63-.28-1.32-.44-2.05-.44-2.21 0-4 1.79-4 4z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}

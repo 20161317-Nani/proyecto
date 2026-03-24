@@ -1,23 +1,25 @@
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
-import { Suspense } from "react";
-import { TopProducts } from "@/components/Products/top-products";
-import { TopProductsSkeleton } from "@/components/Products/top-products/skeleton";
+import { ProductosGrid } from "@/components/Tienda/productos-grid";
 
 export const metadata: Metadata = {
   title: "Productos",
 };
 
-export default function ProductPage() {
+export default function ProductoPage() {
   return (
-    <>
-      <Breadcrumb pageName="Productos" />
-
-      <div className="space-y-10">
-        <Suspense fallback={<TopProductsSkeleton />}>
-          <TopProducts />
-        </Suspense>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-dark dark:text-white">
+            Nuestros Productos
+          </h1>
+          <p className="text-gray-500">
+            Descubre los mejores productos frescos
+          </p>
+        </div>
       </div>
-    </>
+
+      <ProductosGrid />
+    </div>
   );
 }

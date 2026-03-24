@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function AuthCallback() {
+function AuthCallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState("processing");
@@ -15,11 +15,20 @@ export default function AuthCallback() {
       localStorage.setItem("token", token);
       setStatus("success");
       setTimeout(() => {
-        router.push("/producto");
+        try {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          const userRoles = payload.roles || [];
+          const isAdminOrProductor =
+            userRoles.includes("admin") || userRoles.includes("productor");
+          router.push(isAdminOrProductor ? "/dashboard" : "/producto");
+        } catch {
+          router.push("/producto");
+        }
       }, 1000);
     } else {
       setStatus("error");
       setTimeout(() => {
+        console.error("No se recibió el token de autenticación");
         router.push("/auth/sign-in");
       }, 2000);
     }
@@ -91,5 +100,19 @@ export default function AuthCallback() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function AuthCallback() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-dark">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-green-600 border-t-transparent"></div>
+        </div>
+      }
+    >
+      <AuthCallbackContent />
+    </Suspense>
   );
 }

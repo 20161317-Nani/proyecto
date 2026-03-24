@@ -19,14 +19,19 @@ const fetchApi = async <T>(url: string, options?: RequestInit): Promise<T> => {
 export const api = {
   auth: {
     login: (email: string, password: string) =>
-      fetchApi<{ access_token: string; usuario: any }>(
-        `${API_BASE}/auth/login`,
-        {
-          method: "POST",
-          headers: headers(),
-          body: JSON.stringify({ email, password }),
-        },
-      ),
+      fetchApi<{
+        access_token: string;
+        usuario: {
+          sub: string;
+          email: string;
+          nombre: string;
+          roles: string[];
+        };
+      }>(`${API_BASE}/auth/login`, {
+        method: "POST",
+        headers: headers(),
+        body: JSON.stringify({ email, password }),
+      }),
     register: (data: { email: string; password: string; nombre: string }) =>
       fetchApi(`${API_BASE}/auth/register`, {
         method: "POST",
@@ -383,6 +388,87 @@ export const api = {
       fetchApi(`${API_BASE}/imagenes-producto/${id}`, {
         method: "DELETE",
         headers: headers(token),
+      }),
+  },
+
+  roles: {
+    getAll: () => fetchApi(`${API_BASE}/roles`),
+    getOne: (id: number) => fetchApi(`${API_BASE}/roles/${id}`),
+    create: (token: string, data: { nombre: string }) =>
+      fetchApi(`${API_BASE}/roles`, {
+        method: "POST",
+        headers: headers(token),
+        body: JSON.stringify(data),
+      }),
+    update: (
+      token: string,
+      id: number,
+      data: { nombre?: string; estado?: string },
+    ) =>
+      fetchApi(`${API_BASE}/roles/${id}`, {
+        method: "PUT",
+        headers: headers(token),
+        body: JSON.stringify(data),
+      }),
+    delete: (token: string, id: number) =>
+      fetchApi(`${API_BASE}/roles/${id}`, {
+        method: "DELETE",
+        headers: headers(token),
+      }),
+  },
+
+  permisos: {
+    getAll: () => fetchApi(`${API_BASE}/permisos`),
+    getOne: (id: number) => fetchApi(`${API_BASE}/permisos/${id}`),
+    create: (token: string, data: { nombre: string }) =>
+      fetchApi(`${API_BASE}/permisos`, {
+        method: "POST",
+        headers: headers(token),
+        body: JSON.stringify(data),
+      }),
+    delete: (token: string, id: number) =>
+      fetchApi(`${API_BASE}/permisos/${id}`, {
+        method: "DELETE",
+        headers: headers(token),
+      }),
+  },
+
+  usuariosRoles: {
+    assign: (token: string, data: { id_usuario: string; id_rol: number }) =>
+      fetchApi(`${API_BASE}/usuarios-roles`, {
+        method: "POST",
+        headers: headers(token),
+        body: JSON.stringify(data),
+      }),
+    remove: (token: string, id_usuario: string, id_rol: number) =>
+      fetchApi(`${API_BASE}/usuarios-roles/${id_usuario}/${id_rol}`, {
+        method: "DELETE",
+        headers: headers(token),
+      }),
+  },
+
+  rolesPermisos: {
+    assign: (token: string, data: { id_rol: number; id_permiso: number }) =>
+      fetchApi(`${API_BASE}/roles-permisos`, {
+        method: "POST",
+        headers: headers(token),
+        body: JSON.stringify(data),
+      }),
+    remove: (token: string, id_rol: number, id_permiso: number) =>
+      fetchApi(`${API_BASE}/roles-permisos/${id_rol}/${id_permiso}`, {
+        method: "DELETE",
+        headers: headers(token),
+      }),
+  },
+
+  usuarios: {
+    getAll: () => fetchApi(`${API_BASE}/usuarios`),
+    getOne: (id: string) => fetchApi(`${API_BASE}/usuarios/${id}`),
+    update: (token: string, id: string, data: any) =>
+      fetchApi(`${API_BASE}/usuarios/${id}`, {
+        method: "PUT",
+        headers: headers(token),
+        body: JSON.stringify(data),
       }),
   },
 };
