@@ -12,7 +12,7 @@ export function TiendaHeader() {
 
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between border-b border-green-200 bg-green-100 px-4 py-4 shadow-sm md:px-8">
-      <Link href="/tienda" className="flex items-center gap-2">
+      <Link href="/producto" className="flex items-center gap-2">
         <span className="text-2xl font-bold text-green-800">Tienda</span>
       </Link>
 
