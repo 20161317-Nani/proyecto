@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Loader2, Plus, Trash2, Key, X } from "lucide-react";
+import { getCookie } from "@/lib/cookies";
 
 interface Permiso {
   id_permiso: number;
@@ -18,7 +19,7 @@ export default function PermisosPage() {
   const [saving, setSaving] = useState(false);
 
   const getToken = () =>
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    typeof window !== "undefined" ? getCookie("token") : null;
 
   useEffect(() => {
     fetchPermisos();

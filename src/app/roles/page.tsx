@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Loader2, Plus, Pencil, Trash2, Shield, X } from "lucide-react";
+import { getCookie } from "@/lib/cookies";
 
 interface Rol {
   id_rol: number;
@@ -21,7 +22,7 @@ export default function RolesPage() {
   const [saving, setSaving] = useState(false);
 
   const getToken = () =>
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    typeof window !== "undefined" ? getCookie("token") : null;
 
   useEffect(() => {
     fetchRoles();

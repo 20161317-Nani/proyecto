@@ -9,36 +9,13 @@ import {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { LogOutIcon, SettingsIcon, UserIcon } from "./icons";
-
-interface Usuario {
-  sub: string;
-  email: string;
-  nombre: string;
-  roles: string[];
-}
+import { useAuth } from "@/context/AuthContext";
 
 export function UserInfo() {
   const [isOpen, setIsOpen] = useState(false);
-  const [usuario, setUsuario] = useState<Usuario | null>(null);
-
-  useEffect(() => {
-    const stored = localStorage.getItem("usuario");
-    if (stored) {
-      try {
-        setUsuario(JSON.parse(stored));
-      } catch {
-        setUsuario(null);
-      }
-    }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("usuario");
-    window.location.href = "/auth/sign-in";
-  };
+  const { user, logout } = useAuth();
 
   return (
     <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -49,13 +26,13 @@ export function UserInfo() {
           <Image
             src="/images/user/user-03.png"
             className="size-12"
-            alt={`Avatar of ${usuario?.nombre || "Usuario"}`}
+            alt={`Avatar of ${user?.nombre || "Usuario"}`}
             role="presentation"
             width={200}
             height={200}
           />
           <figcaption className="flex items-center gap-1 font-medium text-dark dark:text-dark-6 max-[1024px]:sr-only">
-            <span>{usuario?.nombre || "Usuario"}</span>
+            <span>{user?.nombre || "Usuario"}</span>
 
             <ChevronUpIcon
               aria-hidden
@@ -79,7 +56,7 @@ export function UserInfo() {
           <Image
             src="/images/user/user-03.png"
             className="size-12"
-            alt={`Avatar for ${usuario?.nombre || "Usuario"}`}
+            alt={`Avatar for ${user?.nombre || "Usuario"}`}
             role="presentation"
             width={200}
             height={200}
@@ -87,11 +64,11 @@ export function UserInfo() {
 
           <figcaption className="space-y-1 text-base font-medium">
             <div className="mb-2 leading-none text-dark dark:text-white">
-              {usuario?.nombre || "Usuario"}
+              {user?.nombre || "Usuario"}
             </div>
 
             <div className="leading-none text-gray-6">
-              {usuario?.email || "correo@ejemplo.com"}
+              {user?.email || "correo@ejemplo.com"}
             </div>
           </figcaption>
         </figure>
@@ -125,7 +102,7 @@ export function UserInfo() {
         <div className="p-2 text-base text-[#4B5563] dark:text-dark-6">
           <button
             className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-[9px] hover:bg-gray-2 hover:text-dark dark:hover:bg-dark-3 dark:hover:text-white"
-            onClick={handleLogout}
+            onClick={logout}
           >
             <LogOutIcon />
 

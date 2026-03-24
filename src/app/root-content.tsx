@@ -1,30 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { PropsWithChildren } from "react";
 import { Header } from "@/components/Layouts/header";
 import { Sidebar } from "@/components/Layouts/sidebar";
 import { SidebarProvider } from "@/components/Layouts/sidebar/sidebar-context";
 import { TiendaHeader } from "@/components/Tienda/tienda-header";
+import { useAuth } from "@/context/AuthContext";
 
 export function RootContent({ children }: PropsWithChildren) {
   const pathname = usePathname();
-  const [userRole, setUserRole] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { user, loading, isAdmin, isProductor, isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    const usuarioStr = localStorage.getItem("usuario");
-    if (usuarioStr) {
-      try {
-        const usuario = JSON.parse(usuarioStr);
-        setUserRole(usuario.roles || []);
-      } catch {
-        setUserRole([]);
-      }
-    }
-    setLoading(false);
-  }, []);
+  const isLoggedIn = isAuthenticated && user && user.roles.length > 0;
+  const isAdminOrProductor = isAdmin || isProductor;
+
+  const isAuthRoute = pathname.startsWith("/auth/");
 
   if (loading) {
     return (
@@ -36,12 +27,6 @@ export function RootContent({ children }: PropsWithChildren) {
       </div>
     );
   }
-
-  const isLoggedIn = userRole.length > 0;
-  const isAdminOrProductor =
-    userRole.includes("admin") || userRole.includes("productor");
-
-  const isAuthRoute = pathname.startsWith("/auth/");
 
   if (isAuthRoute) {
     return (

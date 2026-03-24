@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Loader2, Plus, Pencil, Trash2, User, X, Check } from "lucide-react";
+import { getCookie } from "@/lib/cookies";
 
 interface Usuario {
   id_usuario: string;
@@ -33,7 +34,7 @@ export default function UsuariosAdminPage() {
   const [saving, setSaving] = useState(false);
 
   const getToken = () =>
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    typeof window !== "undefined" ? getCookie("token") : null;
 
   useEffect(() => {
     fetchData();

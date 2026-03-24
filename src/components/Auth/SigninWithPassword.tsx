@@ -7,9 +7,11 @@ import InputGroup from "../FormElements/InputGroup";
 import { Checkbox } from "../FormElements/checkbox";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SigninWithPassword() {
   const router = useRouter();
+  const { login } = useAuth();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -39,18 +41,15 @@ export default function SigninWithPassword() {
       const usuario = result.usuario || {};
 
       if (access_token) {
-        localStorage.setItem("token", access_token);
-
         const userRoles = usuario.roles || [];
-        localStorage.setItem(
-          "usuario",
-          JSON.stringify({
-            sub: usuario.sub || "",
-            email: usuario.email || data.email,
-            nombre: usuario.nombre || "",
-            roles: userRoles,
-          }),
-        );
+        const usuarioData = {
+          sub: usuario.id || usuario.sub || "",
+          email: usuario.email || data.email,
+          nombre: usuario.nombre || "",
+          roles: userRoles,
+        };
+
+        login(access_token, usuarioData);
 
         const isAdminOrProductor =
           userRoles.includes("admin") || userRoles.includes("productor");

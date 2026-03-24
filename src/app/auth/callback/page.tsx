@@ -1,29 +1,53 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 function AuthCallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { login } = useAuth();
   const [status, setStatus] = useState("processing");
+  const processedRef = useRef(false);
 
   useEffect(() => {
+    if (processedRef.current) return;
+
     const token = searchParams.get("token");
 
     if (token) {
-      localStorage.setItem("token", token);
+      processedRef.current = true;
+
+      let usuarioData;
+
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        usuarioData = {
+          sub: payload.sub || "",
+          email: payload.email || "",
+          nombre: payload.nombre || "",
+          roles: payload.roles || [],
+        };
+      } catch {
+        usuarioData = null;
+      }
+
+      if (usuarioData) {
+        login(token, usuarioData);
+      }
+
       setStatus("success");
+
+      const destination =
+        usuarioData &&
+        (usuarioData.roles.includes("admin") ||
+          usuarioData.roles.includes("productor"))
+          ? "/dashboard"
+          : "/producto";
+
       setTimeout(() => {
-        try {
-          const payload = JSON.parse(atob(token.split(".")[1]));
-          const userRoles = payload.roles || [];
-          const isAdminOrProductor =
-            userRoles.includes("admin") || userRoles.includes("productor");
-          router.push(isAdminOrProductor ? "/dashboard" : "/producto");
-        } catch {
-          router.push("/producto");
-        }
+        router.push(destination);
       }, 1000);
     } else {
       setStatus("error");
@@ -32,7 +56,7 @@ function AuthCallbackContent() {
         router.push("/auth/sign-in");
       }, 2000);
     }
-  }, [searchParams, router]);
+  }, [searchParams, router, login]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-dark">

@@ -4,9 +4,11 @@ import { useState } from "react";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import GoogleSigninButton from "@/components/Auth/GoogleSigninButton";
+import { useAuth } from "@/context/AuthContext";
 
 export function SignUpForm() {
   const router = useRouter();
+  const { login } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -27,12 +29,37 @@ export function SignUpForm() {
 
     setLoading(true);
     try {
-      await api.auth.register({
+      const result = (await api.auth.register({
         email: formData.email,
         password: formData.password,
         nombre: formData.nombre,
-      });
-      router.push("/auth/sign-in");
+      })) as any;
+
+      if (result.access_token) {
+        let usuarioData;
+
+        try {
+          const payload = JSON.parse(atob(result.access_token.split(".")[1]));
+          usuarioData = {
+            sub: payload.sub || "",
+            email: payload.email || formData.email,
+            nombre: payload.nombre || formData.nombre,
+            roles: payload.roles || [],
+          };
+        } catch {
+          usuarioData = {
+            sub: result.usuario?.id || "",
+            email: result.usuario?.email || formData.email,
+            nombre: result.usuario?.nombre || formData.nombre,
+            roles: result.usuario?.roles || [],
+          };
+        }
+
+        login(result.access_token, usuarioData);
+        router.push("/producto");
+      } else {
+        router.push("/auth/sign-in");
+      }
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Error al registrar usuario",
