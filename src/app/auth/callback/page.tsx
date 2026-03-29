@@ -41,7 +41,7 @@ function AuthCallbackContent() {
 
       const destination =
         usuarioData &&
-        (usuarioData.roles.includes("admin") ||
+        (usuarioData.roles.includes("administrador") ||
           usuarioData.roles.includes("productor"))
           ? "/dashboard"
           : "/producto";

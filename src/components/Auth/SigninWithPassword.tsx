@@ -52,7 +52,7 @@ export default function SigninWithPassword() {
         login(access_token, usuarioData);
 
         const isAdminOrProductor =
-          userRoles.includes("admin") || userRoles.includes("productor");
+          userRoles.includes("administrador") || userRoles.includes("productor");
 
         router.push(isAdminOrProductor ? "/dashboard" : "/producto");
       }

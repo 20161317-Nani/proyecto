@@ -71,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const isAdmin = useMemo(
-    () => user?.roles?.includes("admin") ?? false,
+    () => user?.roles?.includes("administrador") ?? false,
     [user],
   );
 
