@@ -42,47 +42,39 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <div className="hidden w-full p-7.5 xl:block xl:w-1/2">
-            <div className="custom-gradient-1 overflow-hidden rounded-2xl px-12.5 pt-12.5 dark:!bg-dark-2 dark:bg-none">
-              <Link className="mb-10 inline-block" href="/dashboard">
-                <Image
-                  className="hidden dark:block"
-                  src={"/images/logo/logo.svg"}
-                  alt="Logo"
-                  width={176}
-                  height={32}
-                />
-                <Image
-                  className="dark:hidden"
-                  src={"/images/logo/logo-dark.svg"}
-                  alt="Logo"
-                  width={176}
-                  height={32}
-                />
-              </Link>
-              <p className="mb-3 text-xl font-medium text-dark dark:text-white">
+         {/* RIGHT SIDE (FULL IMAGE) */}
+          <div className="hidden xl:block xl:w-1/2 relative min-h-[800px]">
+
+            {/* Imagen de fondo */}
+            <Image
+              src="/images/login/gemmi.png"
+              alt="Login Image"
+              fill
+              priority
+              className="object-cover"
+            />
+
+            {/* Overlay oscuro */}
+            <div className="absolute inset-0 bg-black/40"></div>
+
+            {/* Contenido encima */}
+            <div className="absolute inset-0 flex flex-col justify-left items-center text-center p-10">
+
+              <p className="mb-3 text-xl font-medium text-white dark:text-white">
                 Únete a nuestra tienda
               </p>
 
-              <h1 className="mb-4 text-2xl font-bold text-dark dark:text-white sm:text-heading-3">
+              <h1 className="mb-4 text-2xl font-bold text-white dark:text-white sm:text-heading-3">
                 ¡Bienvenido!
               </h1>
 
-              <p className="w-full max-w-[375px] font-medium text-dark-4 dark:text-dark-6">
-                Crea una cuenta para acceder a todos nuestros productos frescos
+              <p className="w-full max-w-[375px] font-medium text-white dark:text-dark-6">
+                Crea una cuenta para acceder a todos nuestros productos
               </p>
 
-              <div className="mt-31">
-                <Image
-                  src={"/images/grids/grid-02.svg"}
-                  alt="Logo"
-                  width={405}
-                  height={325}
-                  className="mx-auto dark:opacity-30"
-                />
-              </div>
             </div>
           </div>
+
         </div>
       </div>
     </>
