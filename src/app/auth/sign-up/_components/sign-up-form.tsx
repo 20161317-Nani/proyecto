@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
-import GoogleSigninButton from "@/components/Auth/GoogleSigninButton";
+import GoogleSigninButton from "@/components/Administrador/Auth/GoogleSigninButton";
 import { useAuth } from "@/context/AuthContext";
 
 export function SignUpForm() {
