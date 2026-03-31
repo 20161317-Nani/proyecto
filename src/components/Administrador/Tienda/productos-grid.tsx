@@ -91,7 +91,7 @@ export function ProductosGrid() {
             </p>
             <div className="flex items-center justify-between">
               <span className="text-xl font-bold text-green-600">
-                ${producto.precio?.toFixed(2) || "0.00"}
+                ${Number(producto.precio || 0).toFixed(2)}
               </span>
               <button className="flex items-center gap-2 rounded-lg bg-green-600 px-3 py-2 text-white transition-colors hover:bg-green-700">
                 <ShoppingCart size={18} />
